@@ -1,4 +1,4 @@
-window._ = require('lodash');
+// window._ = require('lodash');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -8,7 +8,36 @@ window._ = require('lodash');
 
 window.axios = require('axios');
 
+window.datatable = require('datatable');
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+
+    $('#example').DataTable({
+        "oLanguage":{
+            "sTableLength": "Resultados",
+            "sShow": "Mostrar",
+            "sProcessing": "Processando...",
+            "sZeroRecords": "Nenhum resultado encontrado",
+            "sEmptyTable": "Não há dados para serem exibidos",
+            "sLoadingRecords": "Carregando...",
+            "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando 0 de 0 registros",
+            "sInfoFiltered": "(filtro aplicado em _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sInfoThousands": "",
+            "sSearch": "Pesquisar:",
+            "sUrl": "",
+            "oPaginate": {
+                "sFirst": "Primeira",
+                "sPrevious": "Anterior",
+                "sNext": "Próxima",
+                "sLast": "Última"
+            },
+            "pageLength": 25
+        }
+    });
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

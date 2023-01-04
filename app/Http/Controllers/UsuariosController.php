@@ -38,11 +38,23 @@ class UsuariosController extends Controller
         return redirect()->to('/usuarios'); 
     }
 
-    // public function delete($id) {
-       
-    //     $usuario->id = $id;
-    //     $usuario->save();  
-    // }
+    public function delete(Request $request) {
+        
+        $usuario = new Usuario();
 
-    
+        $usuario->where('id', $request->query('id'))
+            ->first()
+            ->delete();
+
+        return redirect()->to('/usuarios'); 
+    }
+
+    public function find(Request $request) {
+        
+        $usuario = new Usuario();
+
+        $usuario_id = $usuario->where('id', $request->query('id'))->first();
+
+        echo json_encode($usuario_id);
+    }
 }

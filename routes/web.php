@@ -24,6 +24,8 @@ Route::get('/devs', [\App\Http\Controllers\DevsController::class,'index'])->name
 Route::get('/novo-usuario', [\App\Http\Controllers\UsuariosController::class,'novo'])->name('novo-usuario');
 
 Route::post('/store', [\App\Http\Controllers\UsuariosController::class,'store'])->name('store');
+
+Route::get('/usuarios/delete', [\App\Http\Controllers\UsuariosController::class,'delete'])->name('delete');
     
-Route::get('/usuario-detalhes/{id}', [\App\Http\Controllers\UsuariosController::class,'usuario_detalhes'])->name('usuario-detalhes');
+Route::get('/find', [\App\Http\Controllers\UsuariosController::class,'find'])->name('find');
 
