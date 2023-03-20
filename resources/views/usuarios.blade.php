@@ -138,7 +138,7 @@
         </table>
     </div>
 
-    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -153,21 +153,49 @@
 
         $('.exc').click(function(){
             
-            var a = confirm('Deseja mesmo excluir este registro?');
+            // var a = confirm('Deseja mesmo excluir este registro?');
             var id = $(this).attr('data-id');
             
-            if(a)
-            {
-                $.ajax({
-                    type: "GET",
-                    url: '{{ route('delete') }}',
-                    data: { id },
-                    success: function(response){
-                        alert('Cadastro removido.');
-                        location.reload();
-                    }
-                });
-            }
+            // if(a)
+            // {
+            //     $.ajax({
+            //         type: "GET",
+            //         url: '{{ route('delete') }}',
+            //         data: { id },
+            //         success: function(response){
+            //             alert('Cadastro removido.');
+            //             location.reload();
+            //         }
+            //     });
+            // }
+
+            swal({
+                title: "Tem Certeza?",
+                text: "Seu Silvan tá de férias hein, RH tá aqui do lado!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    $.ajax({
+                        type: "GET",
+                        url: '{{ route('delete') }}',
+                        data: { id },
+                        success: function(response){
+                            // alert('Cadastro removido. Fodão !!');
+                            ;
+                        }
+                    });
+
+                    swal("Usuário Removido!", {
+                        icon: "success",
+                    }).then(()=>window.location.reload());
+                } else {
+                    swal({title: "Cagãozinho!!!"});
+                }
+            });
         })
 
 
@@ -188,6 +216,8 @@
                     $('#nomeEdit').val(result.nome);
                     $('#emailEdit').val(result.email);
                     $('#editUserSave').attr("data-id", result.id)
+
+                    
                 }
             });
         })
@@ -206,7 +236,10 @@
                 url: '{{ route('update') }}',
                 data: { id, nome, email },
                 success: function(response){
-                    window.location.reload();
+                    swal({
+                        title: "Usuário alterado com sucesso!",
+                        icon: "success",
+                    }).then(()=>window.location.reload());
                 }
             });
         })
