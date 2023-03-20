@@ -17,6 +17,14 @@ class UsuariosController extends Controller
         return View('usuarios', $dados);
     }
 
+    public function login() {
+
+        $usuarios = Usuario::all();
+        $dados = ['usuarios' => $usuarios];
+        
+        return View('/login', $dados);
+    }
+
     public function usuario_detalhes($id) {
        
         $usuario = Usuario::id($id);
@@ -32,7 +40,9 @@ class UsuariosController extends Controller
         $usuario->email =       $request->input('email');
         $usuario->password =    $request->input('password');
         $usuario->tipo =        $request->input('tipo');
-
+        $usuario->image =       $request->input('image');
+        $usuario->github =      $request->input('github');
+        
         $usuario->save();    
         
         return redirect()->to('/usuarios'); 
@@ -63,8 +73,9 @@ class UsuariosController extends Controller
         $usuario = new Usuario();
 
         $usuario->where('id', $request->input('id'))
-            ->update(['nome'=> $request->input('nome'), 
-                      'email'=> $request->input('email')]
+                ->update(['nome'=> $request->input('nome'), 
+                      'email'=> $request->input('email'),
+                      'github'=> $request->input('github')]
                     );
         
         return redirect()->to('/usuarios');

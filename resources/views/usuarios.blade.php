@@ -19,7 +19,7 @@
 <body>
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link active" href="#">Find Devs @Github</a>
+            <a class="nav-link" href="{{ route('login') }}">Find Devs @Github</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">perfil</a>
@@ -65,6 +65,14 @@
                             <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Digite a senha" required> 
                         </div>
                         <div class="form-group">
+                            <label for="exampleInputPassword1">Link de imagem</label>
+                            <input type="text" class="form-control" name="image" id="image" required> 
+                        </div>
+                        <div class="form-group">
+                            <label for="github">Github</label>
+                            <input type="text" class="form-control" name="github" id="github" required> 
+                        </div>
+                        <div class="form-group">
                             <label for="exampleFormControlSelect1">Tipo de usuário</label>
                             <select class="form-control" id="tipo" name="tipo">
                                 <option value="1">Gestão</option>
@@ -103,6 +111,11 @@
                         <label for="emailEdit">Email</label>
                         <input type="email" class="form-control" name="email" id="emailEdit" aria-describedby="emailHelp" placeholder="Digite o email" required>
                     </div>
+                    <div class="form-group">
+                        <label for="githubEdit">Email</label>
+                        <input type="text" class="form-control" name="github" id="githubEdit" aria-describedby="emailHelp" placeholder="Digite o Github" required>
+                    </div>
+                    
                 </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -227,6 +240,7 @@
             var id =    $(this).attr('data-id');
             var nome =  $('#nomeEdit').val();
             var email = $('#emailEdit').val();
+            var github = $('#githubEdit').val();
             
             $.ajax({
                 headers: {
@@ -234,7 +248,7 @@
                 },
                 type: "POST",
                 url: '{{ route('update') }}',
-                data: { id, nome, email },
+                data: { id, nome, email, github },
                 success: function(response){
                     swal({
                         title: "Usuário alterado com sucesso!",

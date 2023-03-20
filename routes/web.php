@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('login');
 });
+
+Route::get('/login', [\App\Http\Controllers\UsuariosController::class,'login'])->name('login');
       
 Route::get('/usuarios', [\App\Http\Controllers\UsuariosController::class,'lista'])->name('usuarios');
 
