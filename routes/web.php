@@ -29,3 +29,5 @@ Route::get('/usuarios/delete', [\App\Http\Controllers\UsuariosController::class,
     
 Route::get('/find', [\App\Http\Controllers\UsuariosController::class,'find'])->name('find');
 
+Route::post('/update', [\App\Http\Controllers\UsuariosController::class,'update'])->name('update');
+

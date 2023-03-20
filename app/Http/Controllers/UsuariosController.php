@@ -57,4 +57,16 @@ class UsuariosController extends Controller
 
         echo json_encode($usuario_id);
     }
+
+    public function update(Request $request) {
+        
+        $usuario = new Usuario();
+
+        $usuario->where('id', $request->input('id'))
+            ->update(['nome'=> $request->input('nome'), 
+                      'email'=> $request->input('email')]
+                    );
+        
+        return redirect()->to('/usuarios');
+    }
 }

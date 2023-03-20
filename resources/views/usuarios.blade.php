@@ -6,6 +6,15 @@
     <script src="js/app.js"></script>
     <script src="js/bootstrap.js"></script>
     <title>Usuários</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
 </head>
 <body>
     <ul class="nav">
@@ -85,30 +94,20 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="/update">
-                        @csrf
-                        <div class="form-group">
-                            <label for="passwordEdit">Nome</label>
-                            <input type="text" class="form-control" name="nome" id="nomeEdit" placeholder="Digite o nome" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="emailEdit">Email</label>
-                            <input type="email" class="form-control" name="email" id="emailEdit" aria-describedby="emailHelp" placeholder="Digite o email" required>
-                        </div>
-                        
-                        {{-- <div class="form-group">
-                            <label for="exampleFormControlSelect1">Tipo de usuário</label>
-                            <select class="form-control" id="tipo" name="tipo">
-                                <option value="1">Gestão</option>
-                                <option value="2">Usuário comum</option>
-                            </select>
-                        </div> --}}
+                    @csrf
+                    <div class="form-group">
+                        <label for="passwordEdit">Nome</label>
+                        <input type="text" class="form-control" name="nome" id="nomeEdit" placeholder="Digite o nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailEdit">Email</label>
+                        <input type="email" class="form-control" name="email" id="emailEdit" aria-describedby="emailHelp" placeholder="Digite o email" required>
+                    </div>
                 </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <button id="editUserSave" data-id=""class="btn btn-primary">Salvar</button>
                     </div>
-                </form>
                 </div>
             </div>
         </div>
@@ -148,6 +147,10 @@
 
     <script>
 
+        $.ajaxSetup({
+        
+        });
+
         $('.exc').click(function(){
             
             var a = confirm('Deseja mesmo excluir este registro?');
@@ -184,6 +187,26 @@
                     
                     $('#nomeEdit').val(result.nome);
                     $('#emailEdit').val(result.email);
+                    $('#editUserSave').attr("data-id", result.id)
+                }
+            });
+        })
+
+        $('#editUserSave').click(function(){
+            
+            var id =    $(this).attr('data-id');
+            var nome =  $('#nomeEdit').val();
+            var email = $('#emailEdit').val();
+            
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                url: '{{ route('update') }}',
+                data: { id, nome, email },
+                success: function(response){
+                    window.location.reload();
                 }
             });
         })
